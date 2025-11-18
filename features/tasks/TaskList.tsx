@@ -70,7 +70,7 @@ const TaskList = () => {
   const handleUpdateTask = async (taskData: any) => {
     const updated = await storageService.updateTask(taskData.id, taskData);
     if (updated) {
-      notificationService.cancelNotification(taskData.id);
+      notificationService.cancelNotification(Number(taskData.id));
       if (!taskData.completed) {
         notificationService.scheduleNotification(updated);
       }
@@ -83,7 +83,7 @@ const TaskList = () => {
     const updated = await storageService.toggleTaskCompletion(taskId);
     if (updated) {
       if (updated.completed) {
-        notificationService.cancelNotification(taskId);
+        notificationService.cancelNotification(Number(taskId));
       } else {
         notificationService.scheduleNotification(updated);
       }
@@ -101,7 +101,7 @@ const TaskList = () => {
           text: 'Delete',
           style: 'destructive',
           onPress: async () => {
-            notificationService.cancelNotification(taskId);
+            notificationService.cancelNotification(Number(taskId));
             await storageService.deleteTask(taskId);
             await loadTasks();
           },
@@ -132,7 +132,7 @@ const TaskList = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Daily Tasks</Text>
+        <Text style={styles.headerTitle}>Daily Tasks 1</Text>
         <View style={styles.stats}>
           <Text style={styles.statsText}>
             {stats.active} Active • {stats.completed} Done

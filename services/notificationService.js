@@ -82,7 +82,7 @@ class NotificationService {
       const { id, title, description, reminderTime, reminderType } = task;
 
       // Cancel existing notifications for this task
-      Notifications.cancelLocalNotification(String(id));
+      Notifications.cancelLocalNotification(Number(id));
 
       const reminderDate = new Date(reminderTime);
       const now = new Date();
@@ -95,14 +95,14 @@ class NotificationService {
       const notification = {
         title: `Task Reminder: ${title}`,
         body: description || "Don't forget to complete this task!",
-        userInfo: { id: String(id), reminderType: reminderType || null },
+        userInfo: { id: Number(id), reminderType: reminderType || null },
       };
 
       if (Platform.OS === "ios") {
         notification.fireDate = reminderDate.toISOString();
       }
 
-      Notifications.postLocalNotification(notification, String(id));
+      Notifications.postLocalNotification(notification, Number(id));
     } catch (error) {
       console.error("Error scheduling notification:", error);
     }
@@ -123,7 +123,7 @@ class NotificationService {
 
   cancelNotification = (taskId) => {
     try {
-      Notifications.cancelLocalNotification(String(taskId));
+      Notifications.cancelLocalNotification(Number(taskId));
     } catch (error) {
       console.error("Error canceling notification:", error);
     }
