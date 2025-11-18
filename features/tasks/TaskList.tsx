@@ -32,7 +32,6 @@ const TaskList = () => {
   }, [tasks, filter]);
 
   const loadTasks = async () => {
-    // comment out this line to debug
     const loadedTasks = await storageService.getTasks();
     setTasks(loadedTasks);
   };
@@ -63,21 +62,17 @@ const TaskList = () => {
   const handleAddTask = async (taskData: any) => {
     const newTask = await storageService.addTask(taskData);
     if (newTask) {
-      // comment out this line to debug
-      // notificationService.scheduleNotification(newTask);
+      notificationService.scheduleNotification(newTask);
       await loadTasks();
     }
   };
 
   const handleUpdateTask = async (taskData: any) => {
-    // comment out this line to debug
     const updated = await storageService.updateTask(taskData.id, taskData);
     if (updated) {
-      // comment out this line to debug
-      // notificationService.cancelNotification(taskData.id);
+      notificationService.cancelNotification(taskData.id);
       if (!taskData.completed) {
-        // comment out this line to debug
-        // notificationService.scheduleNotification(updated);
+        notificationService.scheduleNotification(updated);
       }
       await loadTasks();
     }
@@ -85,15 +80,12 @@ const TaskList = () => {
   };
 
   const handleToggleTask = async (taskId: any) => {
-    // comment out this line to debug
     const updated = await storageService.toggleTaskCompletion(taskId);
     if (updated) {
       if (updated.completed) {
-        // comment out this line to debug
-        // notificationService.cancelNotification(taskId);
+        notificationService.cancelNotification(taskId);
       } else {
-        // comment out this line to debug
-        // notificationService.scheduleNotification(updated);
+        notificationService.scheduleNotification(updated);
       }
       await loadTasks();
     }
@@ -109,8 +101,7 @@ const TaskList = () => {
           text: 'Delete',
           style: 'destructive',
           onPress: async () => {
-            // comment out this line to debug
-            // notificationService.cancelNotification(taskId);
+            notificationService.cancelNotification(taskId);
             await storageService.deleteTask(taskId);
             await loadTasks();
           },
